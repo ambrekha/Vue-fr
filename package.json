@@ -18,5 +18,8 @@
 	"bugs": {
 		"url": "https://github.com/amandinelemoult2109/Vue-fr/issues"
 	},
-	"homepage": "https://github.com/OpenClassrooms-Student-Center/Vue#readme"
+	"homepage": "https://github.com/OpenClassrooms-Student-Center/Vue#readme",
+	"dependencies": {
+		"vue": "^2.6.14"
+	}
 }
