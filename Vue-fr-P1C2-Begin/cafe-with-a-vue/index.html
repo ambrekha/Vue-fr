@@ -17,10 +17,32 @@
 				est difficile de s'arrêter.
 			</p>
 
+			<section class="menu">
+				<h2>Menu</h2>
+				<div class="menu-item">
+					<div>
+						<ul>
+							<li v-for="item in simpleMenu">
+								<h3>{{ item.name }}</h3>
+								<section v-if="item.inStock === true">En stock</section>
+								<section v-else>Rupture de stock</section>
+								<label for="add-item-quantity">Quantité : {{ item.quantity }}</label>
+								<input v-model.number="item.quantity" id="add-item-quantity" type="number"/>
+								<button @click="addToShoppingCart(item.quantity)">Ajouter au panier d'achat</button>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+
+			<aside class="shopping-cart">
+				<h2>Panier d'achat: {{shoppingCart}} articles</h2>
+			</aside>
+
 			<h2>Contactez nous</h2>
 			<p>Adresse : {{ address }}</p>
-			<p>Téléphone : {{ phoneNumber }}</p>
-			<p>Email : {{ emailAddress }}</p>
+			<p>Téléphone : {{ phone }}</p>
+			<p>Email : {{ email }}</p>
 			<p>Horaires :</p>
 			<ul>
 				<li>L-V: 06:00 à 16:00</li>
@@ -29,7 +51,7 @@
 			</ul>
 
 			<footer class="footer">
-				<p>{{ footerText }}</p>
+				<p>{{ copyright }}</p>
 			</footer>
 		</div>
 
@@ -38,14 +60,51 @@
 			const app = new Vue({
 				el: "#app",
 				data: {
-					restaurantName: "Café avec vue",
-					phoneNumber: "01 88 88 88 88",
-					emailAddress: "hello@cafewithavue.bakery",
-					address: "18 avenue du Beurre, Paris, France"
+					address: "18 avenue du Beurre, Paris, France",
+					email: "hello@cafewithavue.bakery",
+					phone: "01 88 88 88 88",
+					restaurantName: "La belle vue",
+					shoppingCart: 0,
+					simpleMenu: [
+						{
+							name: "Croissant",
+							image: {
+								source: "./images/croissant.jpg",
+								alt: "Un croissant"
+							},
+							inStock: true,
+							quantity: 1
+						},
+						{
+							name: "Baguette de pain",
+							image: {
+								source: "./images/french-baguette.jpeg",
+								alt: "Quatre baguettes de pain"
+							},
+							inStock: true,
+							quantity: 1
+						},
+						{
+							name: "Éclair",
+							image: {
+								source: "./images/eclair.jpg",
+								alt: "Éclair au chocolat"
+							},
+							inStock: false,
+							quantity: 1
+						}
+					]
 				},
 				computed: {
-					footerText() {
-						return "Copyright " + this.restaurantName + " 2019";
+					copyright() {
+						const currentYear = new Date().getFullYear()
+
+						return `Copyright ${this.restaurantName} ${currentYear}`
+					}
+				},
+				methods: {
+					addToShoppingCart(amount) {
+						this.shoppingCart += amount;
 					}
 				}
 			})
